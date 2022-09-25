@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D2C30CA2-8E8F-4650-ABA0-7D9294A975F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Data.Analysis</RootNamespace>
+    <AssemblyName>Microsoft.Data.Analysis</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BooleanDataFrameColumn.cs" />
+    <Compile Include="ByteDataFrameColumn.cs" />
+    <Compile Include="CharDataFrameColumn.cs" />
+    <Compile Include="Converters.cs" />
+    <Compile Include="DataFrame.BinaryOperations.cs" />
+    <Compile Include="DataFrame.BinaryOperators.cs" />
+    <Compile Include="DataFrame.cs" />
+    <Compile Include="DataFrame.IO.cs" />
+    <Compile Include="DataFrame.Join.cs" />
+    <Compile Include="DataFrame.Join.Extrensions.cs" />
+    <Compile Include="DataFrameBuffer.cs" />
+    <Compile Include="DataFrameColumn.BinaryOperations.cs" />
+    <Compile Include="DataFrameColumn.BinaryOperators.cs" />
+    <Compile Include="DataFrameColumn.Computations.cs" />
+    <Compile Include="DataFrameColumn.cs" />
+    <Compile Include="DataFrameColumnCollection.cs" />
+    <Compile Include="DataFrameRow.cs" />
+    <Compile Include="DataFrameRowCollection.cs" />
+    <Compile Include="DateTimeComputation.cs" />
+    <Compile Include="DecimalDataFrameColumn.cs" />
+    <Compile Include="DoubleDataFrameColumn.cs" />
+    <Compile Include="GroupBy.cs" />
+    <Compile Include="Int16DataFrameColumn.cs" />
+    <Compile Include="Int32DataFrameColumn.cs" />
+    <Compile Include="Int64DataFrameColumn.cs" />
+    <Compile Include="PrimitiveColumnContainer.BinaryOperations.cs" />
+    <Compile Include="PrimitiveColumnContainer.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.BinaryOperationAPIs.ExplodedColumns.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.BinaryOperationImplementations.Exploded.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.BinaryOperations.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.BinaryOperators.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.Computations.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.ReversedBinaryOperations.cs" />
+    <Compile Include="PrimitiveDataFrameColumn.Sort.cs" />
+    <Compile Include="PrimitiveDataFrameColumnArithmetic.cs" />
+    <Compile Include="PrimitiveDataFrameColumnComputations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadOnlyDataFrameBuffer.cs" />
+    <Compile Include="SByteDataFrameColumn.cs" />
+    <Compile Include="SingleDataFrameColumn.cs" />
+    <Compile Include="StringDataFrameColumn.BinaryOperations.cs" />
+    <Compile Include="StringDataFrameColumn.cs" />
+    <Compile Include="Strings.Designer.cs" />
+    <Compile Include="TextFieldParser.cs" />
+    <Compile Include="UInt16DataFrameColumn.cs" />
+    <Compile Include="UInt32DataFrameColumn.cs" />
+    <Compile Include="UInt64DataFrameColumn.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Strings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Notes.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

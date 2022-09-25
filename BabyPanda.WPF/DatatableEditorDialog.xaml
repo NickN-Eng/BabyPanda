@@ -1,0 +1,212 @@
+﻿<Window x:Class="BabyPanda.WPF.DatatableEditorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BabyPanda.WPF" xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        mc:Ignorable="d"
+        Title="DatatableEditorDialog" Height="450" Width="800"
+        DataContext="{Binding Model, RelativeSource={RelativeSource Self}}"
+        >
+    <!--DataContext="{Binding RelativeSource={RelativeSource Self}}"-->
+    <Window.Resources>
+        <local:IsShownToVisibilityConverter x:Key="IsShownToVisibilityConverter" />
+        <local:IsHiddenToVisibilityConverter x:Key="IsHiddenToVisibilityConverter" />
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5"/><!--for gridsplitter-->
+            <local:ColumnDefinitionHideable Visible="{Binding IsShown_ColumnPanel}" Width="*" MinWidth="50"/>
+            <ColumnDefinition Width="5"/><!--for gridsplitter-->
+            <local:ColumnDefinitionHideable Visible="{Binding IsShown_UtilityPanel}" Width="*" MinWidth="50"/>
+            <!--<ColumnDefinition Width="5"/>
+            <local:ColumnDefinitionHideable Visible="{Binding IsShown_UtilityPanel}" Width="*" MinWidth="50"/>-->
+        </Grid.ColumnDefinitions>
+        <DockPanel >
+            <Grid DockPanel.Dock="Right" Width="25" Background="LightGray">
+                <DockPanel Margin="2" LastChildFill="False">
+                    <ToggleButton DockPanel.Dock="Top" IsChecked="{Binding IsShown_ColumnPanel}" >
+                        <TextBlock Text="  Column inspector  " >
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="270" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </ToggleButton>
+                    <Grid Height="5" DockPanel.Dock="Top" />
+                    <ToggleButton DockPanel.Dock="Top" IsChecked="{Binding IsShown_UtilityPanel}" >
+                        <TextBlock Text="  Utilities  " >
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="270" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </ToggleButton>
+                    <ToggleButton DockPanel.Dock="Bottom" IsChecked="{Binding IsEditingState, Mode=OneWay}" Command="{Binding SetEditMode_Command}" Visibility="{Binding AllowEditing, Converter={StaticResource IsShownToVisibilityConverter}}">
+                        <TextBlock Text="  Edit  " >
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="270" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </ToggleButton>
+                    <ToggleButton DockPanel.Dock="Bottom" IsChecked="{Binding IsViewState, Mode=OneWay}" Command="{Binding SetViewMode_Command}">
+                        <TextBlock Text="  View  " >
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="270" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </ToggleButton>
+                    <Grid Height="10" DockPanel.Dock="Bottom"/>
+                    <Button DockPanel.Dock="Bottom" Command="{Binding ResetChanges_Command}">
+                        <TextBlock Text=" Refresh " >
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="270" />
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </Button>
+                </DockPanel>
+            </Grid>
+            <!--<Button Height="30" DockPanel.Dock="Top" Content="Update" Click="Click"/>
+            <Button Height="30" DockPanel.Dock="Top" Content="Test function" Command="{Binding TestFunction_Command}"/>
+            <TextBlock DockPanel.Dock="Top">
+                <Run Text="{Binding EditorState}"/>
+                <Run Text="    "/>
+                <Run Text="{Binding SelectedColumn}"/>
+            </TextBlock>-->
+            <Grid DockPanel.Dock="Bottom" Visibility="{Binding HasBeenEdited, Converter={StaticResource IsShownToVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Command="{Binding ResetChanges_Command}" Content="Refresh from parameter" Margin="2"/>
+                <Button Grid.Column="1" Command="{Binding SaveChanges_Command}" Content="Save to parameter" Margin="2"/>
+                <Button Grid.Column="2" Command="{Binding SaveAndClose_Command}" Content="Save and close" Margin="2"/>
+            </Grid>
+            <local:BPDataGrid x:Name="MainDataGrid" ItemsSource="{Binding Table.DefaultView}" HeaderButtonClickedCommand="{Binding SetSelectedColumn_Command}" IsReadOnly="{Binding IsEditingState, Converter={StaticResource InverseBooleanConverter}}" />
+            
+            <!--<DataGrid ItemsSource="{Binding Table.DefaultView}"/>-->
+        </DockPanel>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" Background="LightGray"/>
+        <Grid Grid.Column="2">
+            <!--PANEL: Select a column if unselected-->
+            <Grid Visibility="{Binding HasSelectedColumn, Converter={StaticResource IsHiddenToVisibilityConverter}}" Margin="3">
+                <DockPanel VerticalAlignment="Stretch" >
+                    <TextBlock DockPanel.Dock="Top" Text="Column Inspector" HorizontalAlignment="Stretch" TextAlignment="Left" FontWeight="Bold"/>
+                    <TextBlock DockPanel.Dock="Top" Text="Select a column:" HorizontalAlignment="Stretch" TextAlignment="Left" FontWeight="SemiBold"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding ColumnNames}" BorderThickness="0" HorizontalContentAlignment="Stretch">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding .}" HorizontalAlignment="Stretch" Margin="2" Command="{Binding DataContext.SetSelectedColumn_Command, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" CommandParameter="{Binding .}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Grid>
+            <!--PANEL: Column inspector-->
+            <Grid Visibility="{Binding HasSelectedColumn, Converter={StaticResource IsShownToVisibilityConverter}}" Margin="3">
+                <DockPanel VerticalAlignment="Top">
+                    <TextBlock DockPanel.Dock="Top" Text="Column Inspector" HorizontalAlignment="Stretch" TextAlignment="Left" FontWeight="Bold"/>
+                    <DockPanel Height="Auto" DockPanel.Dock="Top"><!--Column inspector heading-->
+                        <Button DockPanel.Dock="Left" Command="{Binding ClearSelectedColumn_Command}" Content="X"  Height="10"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedColumn}" HorizontalAlignment="Stretch" TextAlignment="Left" FontWeight="SemiBold"/>
+                    </DockPanel>
+                    <Grid DockPanel.Dock="Top" Height="10" HorizontalAlignment="Stretch"/><!--spacer-->
+                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                        <Grid> <!--Name and type editor-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"  VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Type" VerticalAlignment="Center"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ColumnPanel.ColumnName_Editable}" Margin="2" IsEnabled="{Binding IsEditingState}"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ColumnPanel.DataType_Options}" SelectedItem="{Binding ColumnPanel.DataType_Selected}" Margin="2" IsEnabled="{Binding IsEditingState}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DisplayName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Grid.Row="0" Grid.Column="2" Content=">" Margin="2" Command="{Binding ColumnPanel.RenameColumn_Command}" IsEnabled="{Binding IsEditingState}"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content=">" Margin="2" Command="{Binding ColumnPanel.ChangeColumnType_Command}" IsEnabled="{Binding IsEditingState}"/>
+                            
+                        </Grid>
+                        <Grid DockPanel.Dock="Top" Height="10" HorizontalAlignment="Stretch"/><!--spacer-->
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding ColumnPanel.UniqueObjects}" Name="TestItemName">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="{Binding Item}"/>-->
+                                            <TextBlock>
+                                                <Run Text="{Binding Item}"/>
+                                                <Run Text="   ["/>
+                                                <Run Text="{Binding Count}"/>
+                                                <Run Text="]"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        
+                        </ScrollViewer>
+                    </StackPanel>
+                        
+                    
+                </DockPanel>
+                
+            </Grid>
+
+        </Grid>
+        <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"  ResizeDirection="Columns" Background="LightGray"/>
+        <Grid Grid.Column="4">
+            <StackPanel Orientation="Vertical" Margin="3">
+                <TextBlock  Text="Utilities" HorizontalAlignment="Stretch" TextAlignment="Left" FontWeight="Bold"/>
+                <Grid Height="5"/>
+                <TextBlock  Text="Paste from excel" HorizontalAlignment="Stretch" TextAlignment="Left" FontWeight="SemiBold"/>
+                <TextBlock  Text="(Overides data table)" HorizontalAlignment="Stretch" TextAlignment="Left" FontSize="9"/>
+                <Button Content="Paste (w/ headers)" Command="{Binding UtilityPanel.PasteExcelDataFromClipboard_FirstRowAsHeaders_Command}" IsEnabled="{Binding IsEditingState}"/>
+                <Grid Height="3"/>
+                <Button Content="Paste" Command="{Binding UtilityPanel.PasteExcelDataFromClipboard_Command}" IsEnabled="{Binding IsEditingState}"/>
+                <Grid Height="5"/>
+                <TextBlock  Text="Add column" HorizontalAlignment="Stretch" TextAlignment="Left" FontWeight="SemiBold"/>
+                <Grid>
+                    <!--Name and type editor-->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"  VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Type" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UtilityPanel.AddColumn_ColumnName}" Margin="1" IsEnabled="{Binding IsEditingState}"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding UtilityPanel.AddColumn_DataType_Options}" SelectedItem="{Binding UtilityPanel.AddColumn_DataType_Selected}" Margin="1" IsEnabled="{Binding IsEditingState}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                </Grid>
+                <Button Content="Add" Command="{Binding UtilityPanel.AddColumn_Command}" IsEnabled="{Binding IsEditingState}"/>
+
+            </StackPanel>
+            
+        </Grid>
+        <!--<GridSplitter Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"  ResizeDirection="Columns" Background="LightGray"/>
+        <Grid Grid.Column="6" Background="Red" />-->
+    </Grid>
+</Window>

@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <Version>1.0</Version>
+    <Title>BabyPanda.GH</Title>
+    <Description>Description of BabyPanda.GH</Description>
+    <TargetExt>.gha</TargetExt>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Grasshopper" Version="7.13.21348.13001" IncludeAssets="compile;build" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+    <PackageReference Include="Svg" Version="3.2.3" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\BabyPanda.Excel\BabyPanda.Excel.csproj" />
+    <ProjectReference Include="..\BabyPanda.SynopticSvg\BabyPanda.SynopticSvg.csproj" />
+    <ProjectReference Include="..\BabyPanda.WPF\BabyPanda.WPF.csproj" />
+    <ProjectReference Include="..\BabyPanda\BabyPanda.csproj" />
+    <ProjectReference Include="..\Microsoft.Data.Analysis\Microsoft.Data.Analysis.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="ScriptComponents">
+      <HintPath>..\CustomPackages\ScriptComponent\ScriptComponents.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  
+  <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
+    <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
+    <StartArguments></StartArguments>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+
+</Project>
