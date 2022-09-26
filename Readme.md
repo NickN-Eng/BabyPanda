@@ -1,6 +1,16 @@
 # BabyPanda
 
-A library for working with tabular data in grasshopper.
+A library for working with tabular data in grasshopper. **WORK IN PROGRESS**
+
+![CreateProcessAndRead](/Images/CreateProcessAndRead.png?raw=true)
+
+![CreatingADataFrame](/Images/CreatingADataFrame.png?raw=true)
+
+![ViewingADataFrame](/Images/ViewingADataFrame.png?raw=true)
+
+![EditingADataFrame](/Images/EditingADataFrame.png?raw=true)
+
+![CSharpScriptingAPI](/Images/CSharpScriptingAPI.png?raw=true)
 
 # Current features
 - Create DataFrame objects with an expandable component

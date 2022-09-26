@@ -71,7 +71,7 @@ namespace BabyPanda.GH
 
         public override object ScriptVariable()
         {
-            return m_value;
+            return m_value.Clone();
         }
 
         public override string ToString()

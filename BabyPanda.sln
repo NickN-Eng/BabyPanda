@@ -27,6 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{DE2CE481-7EE1-41A4-B97C-CB77BD6112E4}"
+	ProjectSection(SolutionItems) = preProject
+		Images\CreateProcessAndRead.png = Images\CreateProcessAndRead.png
+		Images\CreatingADataFrame.png = Images\CreatingADataFrame.png
+		Images\CSharpScriptingAPI.png = Images\CSharpScriptingAPI.png
+		Images\EditingADataFrame.png = Images\EditingADataFrame.png
+		Images\ViewingADataFrame.png = Images\ViewingADataFrame.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
