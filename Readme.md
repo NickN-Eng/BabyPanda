@@ -2,15 +2,13 @@
 
 A library for working with tabular data in grasshopper. **WORK IN PROGRESS**
 
-![CreateProcessAndRead](/Images/CreateProcessAndRead.png?raw=true)
+<img src="Images/CreateProcessAndRead.png" width="800">
+<img src="Images/CreatingADataFrame.png" width="350">
+<img src="Images/ViewingADataFrame.png" width="800">
+<img src="Images/EditingADataFrame.png" width="800">
+<img src="Images/CSharpScriptingAPI.png" width="800">
 
-![CreatingADataFrame](/Images/CreatingADataFrame.png?raw=true)
-
-![ViewingADataFrame](/Images/ViewingADataFrame.png?raw=true)
-
-![EditingADataFrame](/Images/EditingADataFrame.png?raw=true)
-
-![CSharpScriptingAPI](/Images/CSharpScriptingAPI.png?raw=true)
+With other features like reading/writing to excel and svgs. Full list below...
 
 # Current features
 - Create DataFrame objects with an expandable component
